@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Application</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+    />
+  </head>
+  <style>
+    #chat-box {
+      display: none;
+    }
+  </style>
+  <body class="bg-primary">
+    <div class="container my-5 p-5 bg-white shadow rounded-lg">
+        <div class="d-flex justify-content-center align-item-center">
+            <h1 class="">Chat Application</h1>
+        </div>
+    </div>
+    <div id="chat-box" class="fixed-bottom mb-5 pb-5">
+      <div
+        class="d-flex justify-content-end mr-md-3"
+        style="max-height: 70%; overflow: auto;"
+      >
+        <div class="bg-light p-2 rounded shadow">
+          <div class="bg-warning d-flex align-items-center rounded p-2">
+            <span class="bg-white px-2 rounded-circle" style="font-size: 2em;">
+              <i class="far fa-comments"></i>
+            </span>
+            <h4 class="mt-2 ml-2">Chatbot</h4>
+          </div>
+          <div style="width: 270px;">
+            <div
+              id="chat-messages"
+              class="p-2 text-white"
+              style="height: 300px; overflow-y: auto;"
+            >
+              <div class="d-flex justify-content-start mt-1">
+                <span class="bg-success py-1 px-3 rounded-right">
+                    Hai, How can I help you?
+                </span>
+              </div>
+            </div>
+            <div>
+              <form class="d-flex">
+                <input
+                  type="text"
+                  id="message"
+                  class="form-control mb-2 mr-md-2 flex-grow-1"
+                  placeholder="Type your message..."
+                  required
+                />
+                <span
+                  class="btn btn-success mb-2 rounded"
+                  style="font-size: 1em;"
+                  type="button"
+                  onclick="clickHandler()"
+                >
+                  <i class="far fa-paper-plane"></i>
+                </span>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fixed-bottom mb-3">
+      <div class="d-flex justify-content-end mr-3">
+        <span
+          id="chat_btn"
+          class="btn bg-white px-3 rounded-circle"
+          style="font-size: 2em;"
+          type="button"
+          onclick="show_hide()"
+        >
+          <i class="far fa-comments"></i>
+        </span>
+      </div>
+    </div>
+
+    <script>
+      function clickHandler() {
+        //user input value
+        var userText = document.getElementById("message").value;
+
+        //creating new div element
+        var spanElement = document.createElement("span"); //span
+        var text = document.createTextNode(userText); //text node
+        spanElement.appendChild(text); // append text to span
+        spanClasses = "bg-primary py-1 px-3 rounded-left text-break"; //span classes
+        spanElement.className = spanClasses;
+        spanElement.style.maxWidth = "250px"; // set Max width for the chat message
+
+        var divElement = document.createElement("div"); // div
+        divElement.appendChild(spanElement); // append span to div
+        divClasses = "d-flex justify-content-end mt-1"; //div classes
+        divElement.className = divClasses;
+
+        const messages = document.getElementById("chat-messages"); //getting chatbox id
+
+        messages.appendChild(divElement); //append the new chat to the chatbox
+
+        //clearing the previous input value in the input field
+        document.getElementById("message").value = "";
+
+        // Reply from the server ( response )
+
+         //creating new div element
+        var spanElement = document.createElement("span"); //span
+        var text = document.createTextNode("Thanks for texting!"); //text node
+        spanElement.appendChild(text); // append text to span
+        spanClasses = "bg-success py-1 px-3 rounded-right text-break"; //span classes
+        spanElement.className = spanClasses;
+        spanElement.style.maxWidth = "250px"; // set Max width for the chat message
+
+        var divElement = document.createElement("div"); // div
+        divElement.appendChild(spanElement); // append span to div
+        divClasses = "d-flex justify-content-start mt-1"; //div classes
+        divElement.className = divClasses;
+
+        messages.appendChild(divElement); //append the response message to the chatbox
+
+
+        // check if we scroll or not
+        shouldScroll =
+          messages.scrollTop + messages.clientHeight === messages.scrollHeight;
+        if (!shouldScroll) {
+          scrollToBottom();
+        }
+        //scroll to bottom function
+        function scrollToBottom() {
+          messages.scrollTop = messages.scrollHeight;
+        }
+      }
+
+      // toggle show and hide chat box
+      function show_hide() {
+        chatBox = document.getElementById("chat-box");
+        if (chatBox.style.display === "block") {
+          chatBox.style.display = "none";
+        } else {
+          chatBox.style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>
